@@ -1,0 +1,23 @@
+# [REAL] - fly.toml для запуска фонового Worker-а
+
+app = "morpheusuu2egd" # <--- ВАШЕ УНИКАЛЬНОЕ ИМЯ
+
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[build]
+  image = "er-telethon-worker:latest" 
+
+# Используем тип "machine" для фоновой задачи
+[[machines]] 
+  name = "telethon-runner"
+  cpu = 1
+  memory = 256
+  auto_start = true
+  auto_stop = false
+  
+  [machines.mounts]
+  source = "telethon_data" # Имя тома (создадим на Fly.io)
+  destination = "/app" # Папка, куда монтируется том
+  
